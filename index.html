@@ -20,6 +20,145 @@
     <script type="text/babel">
       console.log(React);
       console.log(ReactDOM);
+
+      // class App extends React.Component {
+      //   state = {
+      //     age: 39,
+      //   };
+      //   interval = null;
+      //   constructor(props) {
+      //     super(props);
+      //     console.log("constructor", props);
+      //   }
+      //   render() {
+      //     console.log("render");
+      //     return (
+      //       <div>
+      //         <h2>
+      //           Hello {this.props.name} - {this.state.age}
+      //         </h2>
+      //       </div>
+      //     );
+      //   }
+      //   // componentWillMount() {
+      //   //   console.log("componentWillMount");
+      //   // }
+      //   //componentWillMount => getDerivedStateFromProps 변경
+      //   // // 시간의 흐름에 따라 변경 되는 props에 state가 의존하는 특수한 경우에 사용 된다
+      //   // static getDerivedStateFromProps(nextProps, prevState) {
+      //   //   console.log("getDerivedStateFromProps", nextProps, prevState);
+
+      //   //   // return null;
+      //   //   return {
+      //   //     age: 390,
+      //   //   };
+      //   // }
+
+      //   componentDidMount() {
+      //     console.log("componentDidMount");
+
+      //     this.interval = setInterval(() => {
+      //       // console.log("setInterval");
+      //       this.setState((state) => ({ ...state, age: state.age + 1 }));
+      //     }, 1000);
+      //   }
+
+      //   // componentWillReceiveProps
+      //   // props 를 새로 지정했을 때 바로 호출됩니다.
+      //   // 여기는 state 의 변경에 반응하지 않습니다.
+      //   // - 여기서 props 의 값에 따라 state 를 변경해야 한다면,
+      //   // -- setState 를 이용해 state 를 변경합니다.
+      //   // 그러면 다음 이벤트로 각각 가는것이 아니라--  한번에 변경됩니다.
+      //   // componentWillReceiveProps(nextProps) {
+      //   //   console.log("componentWillReceiveProps", nextProps);
+      //   // }
+
+      //   // shouldComponentUpdate
+      //   // props 만 변경되어도
+      //   // state 만 변경되어도
+      //   // props & state 둘다 변경되어도
+      //   // newProps 와 new State 를 인자로 해서 호출
+      //   // return type 이 boolean 입니다.
+      //   // - true 면 render
+      //   // - false 면 render 가 호출되지 않습니다.
+      //   // - 이 함수를 구현하지 않으면, 디폴트는 true
+      //   shouldComponentUpdate(nextProps, nextState) {
+      //     // 화면 안바뀜 false
+      //     console.log("shouldComponentUpdate", nextProps, nextState);
+
+      //     return true; // 다음 단계로 가짐
+      //     // return false; // 다음 단계로 안가짐
+      //   }
+
+      //   // componentWillUpdate
+      //   // 컴포넌트가 재 랜더링 되기 직전에 불립니다.
+      //   // 여기선 setState 같은 것을 쓰면 아니됩니다.
+      //   // componentWillUpdate(nextProps, nextState) {
+      //   //   console.log("componentWillUpdate", nextProps, nextState);
+      //   // }
+
+      //   // componentDidUpdate
+      //   // 컴포넌트가 재 랜더링을 마치면 불립니다.
+      //   componentDidUpdate(prevProps, prevState) {
+      //     console.log("componentDidUpdate", prevProps, prevState);
+      //   }
+
+      //   componentWillUnmpunt() {
+      //     clearInterval(this.interval);
+      //   }
+      // }
+      // =================================================================
+      // let i = 0;
+      // class App extends React.Component {
+      //   state = { list: [] };
+
+      //   render() {
+      //     return (
+      //       <div id="list" style={{ height: 100, overflow: "scroll" }}>
+      //         {this.state.list.map((i) => {
+      //           return <div>{i}</div>;
+      //         })}
+      //       </div>
+      //     );
+      //   }
+      //   componentDidMount() {
+      //     setInterval(() => {
+      //       this.setState((state) => ({
+      //         list: [...state.list, i++],
+      //       }));
+      //     }, 1000);
+      //   }
+
+      //   getSnapshotBeforeUpdate(prevProps, prevState) {
+      //     if (prevState.list.length === this.state.list.length) return null;
+      //     const list = document.querySelector("#list");
+      //     return list.scrollHeight - list.scrollTop;
+      //   }
+
+      //   componentDidUpdate(prevProps, prevState, snapshot) {
+      //     console.log(snapshot);
+      //     if (snapshot === null) return;
+      //     const list = document.querySelector("#list");
+      //     list.scrollTop = list.scrollHeight - snapshot;
+      //   }
+      // }
+      // =================================================================
+      class App extends React.Component {
+        state = {
+          hasError: false,
+        };
+        render() {
+          if (this.state.hasError) {
+            return <div>예상치 못한 에러 발생.</div>;
+          }
+          return <WebService />; // WebService 없지만 있다면 이거를 실행
+        }
+        componentDidCatch(error, info) {
+          this.setState({ hasError: true });
+        }
+      }
+
+      ReactDOM.render(<App name="Mark" />, document.querySelector("#root"));
     </script>
   </body>
 </html>
